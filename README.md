@@ -11,7 +11,7 @@
 
 ## Veja o projeto
 
-- [SmartStats](https://smartstats.vercel.app)<br>
+- [SmartStats](https://lost-ark-to-do.vercel.app)<br>
 
 ## Techs usadas
 
