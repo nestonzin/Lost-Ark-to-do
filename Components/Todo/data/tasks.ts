@@ -15,6 +15,7 @@ const dailies: ITask[] = [
   { title: "Guild Contribution", icon: "/task-icons/guild.svg" },
   { title: "Life Skills", icon: "/task-icons/life-skills.svg" },
   { title: "Stronghold", icon: "/task-icons/stronghold.svg" },
+  { title: "Card Merchant", icon: "/task-icons/rapport.svg" },
 ];
 
 const weeklies: ITask[] = [
@@ -25,6 +26,9 @@ const weeklies: ITask[] = [
     icon: "/task-icons/bloodstone-exchange.svg",
   },
   { title: "Raid Challenge", icon: "/task-icons/guardian-raids.svg" },
+  { title: "Abyss Challenge", icon: "/task-icons/abyss.svg" },
+  { title: "Legion", icon: "/task-icons/guardian-raids.svg" },
+  { title: "Argoos", icon: "/task-icons/guardian-raids.svg" },
 ];
 
 const tasks = { dailies, weeklies };
