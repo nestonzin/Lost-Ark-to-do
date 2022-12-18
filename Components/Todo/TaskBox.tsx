@@ -31,16 +31,25 @@ export const TaskBox: React.FC<ITask> = ({ title, icon }: ITask) => {
     toggleChecked();
   };
   return (
-    <WrapItem aria-label="Task">
+    <WrapItem aria-label="Task" p="1rem">
       <Flex
         p={2}
         w="max-content"
+        alignItems={"center"}
         borderRadius={8}
         opacity={checked ? "45%" : "100%"}
         cursor="pointer"
         onClick={onClick}
         {...getCheckboxProps()}
       >
+        <CheckboxGroup colorScheme="yellow">
+          <Checkbox
+            isChecked={checked}
+            id={checkboxId}
+            pr="2px"
+            onChange={onClick}
+          />
+        </CheckboxGroup>
         <Image src={icon} width="16px" height="16px" pr="4px" />
         <Text
           tabIndex={0}
@@ -51,14 +60,6 @@ export const TaskBox: React.FC<ITask> = ({ title, icon }: ITask) => {
         >
           {title}
         </Text>
-        <CheckboxGroup colorScheme="yellow">
-          <Checkbox
-            isChecked={checked}
-            id={checkboxId}
-            pr="2px"
-            onChange={onClick}
-          />
-        </CheckboxGroup>
       </Flex>
     </WrapItem>
   );

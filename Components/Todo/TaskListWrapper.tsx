@@ -13,7 +13,7 @@ export const TaskListWrapper: React.FC<IProps> = ({
 }: IProps) => {
   return (
     <Flex direction="column">
-      <Heading>{type}</Heading>
+      <Heading p="1rem">{type}</Heading>
       <TaskCheckboxList tasks={taskList} type={type} />
     </Flex>
   );
