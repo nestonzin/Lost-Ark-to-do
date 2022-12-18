@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import type { ITask } from "./data/tasks";
 
 export const TaskBox: React.FC<ITask> = ({ title, icon }: ITask) => {
-  const { colorMode } = useColorMode();
+  // const { colorMode } = useColorMode();
   const checkboxId = `${title
     .toLocaleLowerCase()
     .split(" ")
