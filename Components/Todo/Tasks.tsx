@@ -15,7 +15,7 @@ const taskData = [
 
 export const Tasks = () => {
   return (
-    <Flex flexDirection={"column"} p="3rem" gap="5rem">
+    <Flex flexDirection={"column"} p="3rem" gap="1rem">
       {taskData.map(({ type, list }) => (
         <TaskListWrapper key={type} type={type} taskList={list} />
       ))}
