@@ -50,7 +50,7 @@ export const TaskBox: React.FC<ITask> = ({ title, icon }: ITask) => {
             onChange={onClick}
           />
         </CheckboxGroup>
-        <Image src={icon} width="16px" height="16px" pr="4px" />
+        <Image src={icon} width="25px" height="25px" pr="4px" />
         <Text
           tabIndex={0}
           mr={2}
