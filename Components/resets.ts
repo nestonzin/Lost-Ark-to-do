@@ -11,7 +11,7 @@ const lastVisitDate = () => {
 
 const dailyResetDate = (ref: Date) => {
   const date = new Date(ref);
-  date.setUTCHours(10, 0, 0, 0);
+  date.setUTCHours(7, 0, 0, 0);
   return date;
 };
 
