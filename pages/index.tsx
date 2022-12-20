@@ -6,7 +6,11 @@ import { DefaultLayout } from "../_layouts/default";
 export default function Home() {
   return (
     <DefaultLayout>
-      <Flex flexDirection={["column", "column", "row", "row"]} justifyContent="center" alignItems="center">
+      <Flex
+        flexDirection={["column", "column", "row", "row"]}
+        justifyContent="center"
+        alignItems="center"
+      >
         <Head>
           <title>Lost Ark to do list</title>
           <meta
