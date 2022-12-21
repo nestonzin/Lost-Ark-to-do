@@ -1,4 +1,4 @@
-import { Button, Flex, Image, useColorMode } from "@chakra-ui/react";
+import { Button, Flex, Image, useColorMode, Link, Box } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 export const Navbar = () => {
@@ -13,9 +13,14 @@ export const Navbar = () => {
         alt="Logo do jogo Lost Ark"
         ml="3rem"
       />
-      <Button onClick={toggleColorMode}>
-        {colorMode === "dark" ? <MoonIcon /> : <SunIcon />}
-      </Button>
+      <Flex gap="1rem" alignItems="center">
+        <Link href="/price">
+          Veja os preços dos principais itens
+        </Link>
+        <Button onClick={toggleColorMode}>
+          {colorMode === "dark" ? <MoonIcon /> : <SunIcon />}
+        </Button>
+      </Flex>
     </Flex>
   );
 };
