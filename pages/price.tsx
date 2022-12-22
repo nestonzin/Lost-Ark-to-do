@@ -1,4 +1,3 @@
-import { SunIcon } from "@chakra-ui/icons";
 import {
   Button,
   Flex,
@@ -13,7 +12,19 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import api from "../services/api";
 import { DefaultLayout } from "../_layouts/default";
 
@@ -24,11 +35,46 @@ interface IItems {
   image: string;
   recentPrice: number;
   lowPrice: number;
+  shortHistoric: {
+    [key: string]: number;
+    // por isso vc faz dessa forma, fala que é uma string genérica, n importa o nome
+  };
 }
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend
+);
+export const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: "top" as const,
+    },
+    title: {
+      display: true,
+      text: "Preço semanal",
+    },
+  },
+};
 
 export default function Price() {
   const [Items, setItems] = useState<IItems[]>([]);
+  const [currentItem, setCurrentItem] = useState<IItems>();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleOpenModal = useCallback(
+    (item: IItems) => {
+      setCurrentItem(item);
+      onOpen();
+    },
+    [onOpen]
+  );
 
   useEffect(() => {
     async function getItems() {
@@ -36,10 +82,30 @@ export default function Price() {
         "/export-market-live/South America?ids=6882601,6882101,101063,66110222,6861008,101062"
       );
       setItems(response.data);
-      // console.log("peguei os itens!", Items);
     }
     getItems();
   }, []);
+
+  const initialData = {
+    datasets: [],
+    labels: [""],
+  };
+
+  const data = useMemo(() => {
+    if (currentItem)
+      return {
+        labels: Object.keys(currentItem.shortHistoric),
+        datasets: [
+          {
+            fill: true,
+            label: "Preço",
+            data: Object.values(currentItem.shortHistoric),
+            borderColor: "rgb(53, 162, 235)",
+            backgroundColor: "rgba(53, 162, 235, 0.5)",
+          },
+        ],
+      };
+  }, [currentItem]);
 
   return (
     <DefaultLayout>
@@ -85,7 +151,9 @@ export default function Price() {
               <Text color="orange.300">Preço médio: {item.avgPrice}</Text>
               <Text color="yellow.300">Preço min: {item.lowPrice}</Text>
               <Text color="green.300">Preço atual: {item.recentPrice}</Text>
-              <Button onClick={onOpen}>Veja o grafico de preços</Button>
+              <Button onClick={() => handleOpenModal(item)}>
+                Veja o grafico de preços
+              </Button>
 
               <Modal onClose={onClose} isOpen={isOpen} isCentered>
                 <ModalOverlay />
@@ -93,17 +161,18 @@ export default function Price() {
                   <ModalHeader>Preço esta semana</ModalHeader>
                   <ModalCloseButton />
                   <ModalBody>
-                    <Text>Texte</Text>
+                    {currentItem && (
+                      <Line options={options} data={data ?? initialData} />
+                    )}
                   </ModalBody>
                   <ModalFooter>
-                    <Button onClick={onClose}>Close</Button>
+                    <Button onClick={onClose}>Fechar</Button>
                   </ModalFooter>
                 </ModalContent>
               </Modal>
             </Flex>
           ))}
         </Flex>
-        {/* <Text>teste</Text> */}
       </Flex>
     </DefaultLayout>
   );
