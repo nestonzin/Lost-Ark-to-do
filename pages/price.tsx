@@ -27,8 +27,10 @@ import { Line } from "react-chartjs-2";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import api from "../services/api";
 import { DefaultLayout } from "../_layouts/default";
+import { AbstractModal } from "../Components/AbstractModal";
+import { Graphic } from "../Components/Graphic";
 
-interface IItems {
+export interface IItems {
   name: string;
   category: string;
   avgPrice: number;
@@ -154,6 +156,7 @@ export default function Price() {
               <Button onClick={() => handleOpenModal(item)}>
                 Veja o grafico de preços
               </Button>
+              {/* <AbstractModal data={data ?? initialData} /> */}
 
               <Modal onClose={onClose} isOpen={isOpen} isCentered>
                 <ModalOverlay />
@@ -161,9 +164,10 @@ export default function Price() {
                   <ModalHeader>Preço esta semana</ModalHeader>
                   <ModalCloseButton />
                   <ModalBody>
-                    {currentItem && (
+                    {/* {currentItem && (
                       <Line options={options} data={data ?? initialData} />
-                    )}
+                    )} */}
+                    <Graphic/>
                   </ModalBody>
                   <ModalFooter>
                     <Button onClick={onClose}>Fechar</Button>
