@@ -12,8 +12,11 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useMemo } from "react";
-import { ICurrentItem } from "../../pages/price";
+import { IItem } from "../../pages/price";
 
+interface GraphicProps {
+  currentItem: IItem;
+}
 
 ChartJS.register(
   CategoryScale,
@@ -37,33 +40,31 @@ export const options = {
     },
   },
 };
-export const Graphic: React.FC<ICurrentItem> = (prop: ICurrentItem) => {
+export const Graphic = ({currentItem}: GraphicProps) => {
   const initialData = {
     datasets: [],
     labels: [""],
   };
   const data = useMemo(() => {
-    if (prop.currentItem)
+    if (currentItem.shortHistoric)
       return {
-        labels: Object.keys(prop.currentItem.shortHistoric),
+        labels: Object.keys(currentItem.shortHistoric),
         datasets: [
           {
             fill: true,
             label: "Preço",
-            data: Object.values(prop.currentItem.shortHistoric),
+            data: Object.values(currentItem.shortHistoric),
             borderColor: "rgb(53, 162, 235)",
             backgroundColor: "rgba(53, 162, 235, 0.5)",
           },
         ],
       };
-  }, [prop.currentItem]);
+  }, [currentItem]);
 
-  console.log(prop.currentItem, "items");
+  console.log(currentItem, "items");
   return (
     <Flex>
-      {prop.currentItem && (
-        <Line options={options} data={data ?? initialData} />
-      )}
+      {currentItem && <Line options={options} data={data ?? initialData} />}
     </Flex>
   );
 };
