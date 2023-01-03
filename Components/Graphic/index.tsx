@@ -11,8 +11,9 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { useMemo, useState } from "react";
-import type { IItems } from "../../pages/price";
+import { useMemo } from "react";
+import { ICurrentItem } from "../../pages/price";
+
 
 ChartJS.register(
   CategoryScale,
@@ -36,34 +37,33 @@ export const options = {
     },
   },
 };
-export const Graphic = () => {
-  const [Items, setItems] = useState<IItems[]>([]);
-  const [currentItem, setCurrentItem] = useState<IItems>();
-
+export const Graphic: React.FC<ICurrentItem> = (prop: ICurrentItem) => {
   const initialData = {
     datasets: [],
     labels: [""],
   };
   const data = useMemo(() => {
-    if (currentItem)
+    if (prop.currentItem)
       return {
-        labels: Object.keys(currentItem.shortHistoric),
+        labels: Object.keys(prop.currentItem.shortHistoric),
         datasets: [
           {
             fill: true,
             label: "Preço",
-            data: Object.values(currentItem.shortHistoric),
+            data: Object.values(prop.currentItem.shortHistoric),
             borderColor: "rgb(53, 162, 235)",
             backgroundColor: "rgba(53, 162, 235, 0.5)",
           },
         ],
       };
-  }, [currentItem]);
+  }, [prop.currentItem]);
 
-  console.log(currentItem, "items");
+  console.log(prop.currentItem, "items");
   return (
     <Flex>
-      {currentItem && <Line options={options} data={data ?? initialData} />}
+      {prop.currentItem && (
+        <Line options={options} data={data ?? initialData} />
+      )}
     </Flex>
   );
 };
